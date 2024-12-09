@@ -14,13 +14,12 @@ export const RouterController = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="register" element={<Register />} />
-      <Route path="/" element={ auth? <Login/> : <Facturas/> } />
+      <Route path="/facturas" element={ auth? <Login/> : <Facturas/> } />
       <Route path="addFacturas" element={ auth? <Login/> : <AddFacturas/> } />
       <Route path="editar/:token" element={ auth? <Login/> : <Editar/> } />
       <Route path="show/:idToken" element={ auth? <Login/> : <Show/> } />
-
     </Routes>
   );
 };

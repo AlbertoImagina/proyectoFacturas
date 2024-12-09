@@ -17,7 +17,7 @@ const toast = useToast()
     return (
         <div>
             <Flex>
-                <Link to="/">
+                <Link to="/facturas">
                     <Button
                     colorScheme='teal'
 
