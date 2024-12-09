@@ -9,7 +9,7 @@ function Show() {
 
     const { data, loading, error } = useData({
         endpoint: EndpointTypes.FACTURAS,
-        id: idToken
+        id: idToken || ''
     });
     
     if (loading) {

@@ -1,31 +1,13 @@
 import { Formik } from 'formik';
-import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { addData } from '../shared/middlewares/getData';
 import { useMutation } from '@tanstack/react-query';
 import { Flex, Input,Button, FormLabel, Text, Checkbox, useToast } from '@chakra-ui/react';
 
 function AddFacturas() {
 
-const inititalValues = {
-    createdAt: "",
-    numero: 0,
-    cliente: "",
-    fechaPago: "",
-    pagada: false,
-}
-
-const formularioSchema = Yup.object({
-    createdAt: Yup.date().required(),
-    numero: Yup.number().required().positive().integer(),
-    cliente: Yup.string().required(),
-    fechaPago: Yup.date().required('FECHA NECESARIA'),
-    pagada: Yup.boolean().required(),
-    });
-
 const toast = useToast()
-const navigate = useNavigate()
 
     const mutation = useMutation({
         mutationFn: addData
@@ -35,7 +17,7 @@ const navigate = useNavigate()
     return (
         <div>
             <Flex>
-                <Link to="/facturas">
+                <Link to="/">
                     <Button
                     colorScheme='teal'
 
@@ -50,11 +32,22 @@ const navigate = useNavigate()
 
 
     <Formik
-    initialValues={inititalValues}
-    validationSchema={formularioSchema}
+        initialValues={{ 
+        createdAt: "",
+        numero: 0,
+        cliente: "",
+        fechaPago: "",
+        pagada: false,
+    }}
 
     onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true)
+        const dataValues = { ...values, id: uuidv4()}
+        mutation.mutate(dataValues)
+        toast({
+            title: 'Factura creada con éxito',
+            colorScheme: 'green'
+        })
     }}
     >
     {({
@@ -117,15 +110,6 @@ const navigate = useNavigate()
             m="10px"
             type="submit" 
             disabled={isSubmitting}
-            onClick={() => {
-            const dataValues = { ...values, id: uuidv4()}
-            mutation.mutate(dataValues)
-            toast({
-                title: 'Factura creada con éxito',
-                colorScheme: 'green'
-            })
-            navigate('/')
-            }}
             >
                 Submit
             </Button>

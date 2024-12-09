@@ -4,9 +4,10 @@ import * as Yup from 'yup'
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { updateData } from "../shared/middlewares/getData";
-import { v4 as uuidv4 } from 'uuid';
+import { Factura } from "../types/Facturas";
 
-function EditFacturas({ item }) {
+
+function EditFacturas({ item } : {item:Factura}) {
     const formularioSchema = Yup.object({
         createdAt: Yup.date().required("Fecha requerida"),
         numero: Yup.number().required("Número de factura requerida").positive().integer(),
@@ -51,8 +52,22 @@ function EditFacturas({ item }) {
         }}
             validationSchema={formularioSchema}
     
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values,{ setSubmitting }) => {
             setSubmitting(true)
+            try{
+                const dataValues = { ...values}
+                mutation.mutate(dataValues)
+                toast({
+                    title: "Modificada correctamente",
+                    colorScheme:"green"
+                })
+                navigate('/')
+            } catch (e) {
+                toast({
+                    title:`No se ha podido modificar la factura: ${e}`,
+                    colorScheme: 'red'
+                    })
+                }
             toast({
                 title: 'Factura modificada con éxito',
                 colorScheme: 'green'
@@ -129,22 +144,6 @@ function EditFacturas({ item }) {
                 m="10px"
                 type="submit" 
                 disabled={isSubmitting}
-                onClick={() => {
-                try{
-                    const dataValues = { ...values}
-                    mutation.mutate(dataValues)
-                    toast({
-                        title: "Modificada correctamente",
-                        colorScheme:"green"
-                    })
-                    navigate('/')
-                } catch (e) {
-                    toast({
-                        title:`No se ha podido modificar la factura: ${e}`,
-                        colorScheme: 'red'
-                        })
-                    }
-                }}
                 >
                     Submit
                 </Button>

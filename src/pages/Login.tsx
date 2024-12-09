@@ -107,16 +107,16 @@ export const Login = () => {
                                                 type={i?.type}
                                                 name={i?.name}
                                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFieldValue(i?.name, e?.target?.value)}
-                                                value={values[i?.name]}
+                                                value={(values as any)[i?.name]}
                                             />
 
                                             <Text
-                                                opacity={errors[i?.name] ? 1 : 0}
+                                                opacity={(errors as any)[i?.name] ? 1 : 0}
                                                 color="red.500"
                                                 fontSize="12px"
                                                 mt="3px"
                                             >
-                                                *{errors[i?.name]}
+                                                *{(errors as any)[i?.name]}
                                             </Text>
                                         </FormControl>
                                     )}

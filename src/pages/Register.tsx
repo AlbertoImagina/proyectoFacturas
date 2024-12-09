@@ -4,7 +4,6 @@ import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import { userRegister } from "../shared/middlewares/login.middleware";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../shared/context/auth.context";
 import { Link as RouterLink } from "react-router-dom"
 
 export interface Inputs {
@@ -14,7 +13,6 @@ export interface Inputs {
 }
 
 export const Register = () => {
-    const { setUser, setAuth } = useAuthContext();
     const toast = useToast();
     const navigate = useNavigate();
 
@@ -63,7 +61,7 @@ export const Register = () => {
     const validationSchema = Yup.object({
         email: Yup.string().email("El campo debe ser un email valido.").required("El campo email es obligatorio"),
         password: Yup.string().required("El campo contraseña es obligatorio"),
-        confirmPassword: Yup.string().required("El campo confirmar contraseña es obligatorio").oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir.'),
+        confirmPassword: Yup.string().required("El campo confirmar contraseña es obligatorio").oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir.'),
         nombre: Yup.string().required("El campo nombre es obligatorio"),
         apellidos: Yup.string().required("El campo apellidos es obligatorio"),
         telefono: Yup.number().min(9, "El telefono debe ser valido").required("El campo telefono es obligatorio"),
@@ -146,16 +144,16 @@ export const Register = () => {
                                                 type={i?.type}
                                                 name={i?.name}
                                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFieldValue(i?.name, e?.target?.value)}
-                                                value={values[i?.name]}
+                                                value={values[i?.name as keyof typeof values]}
                                             />
 
                                             <Text
-                                                opacity={errors[i?.name] ? 1 : 0}
+                                                opacity={errors[i?.name as keyof typeof errors] ? 1 : 0}
                                                 color="red.500"
                                                 fontSize="12px"
                                                 mt="3px"
                                             >
-                                                *{errors[i?.name]}
+                                                *{errors[i?.name as keyof typeof errors]}
                                             </Text>
                                         </FormControl>
                                     )}

@@ -9,7 +9,7 @@ function Editar() {
 
     const { data, loading, error } = useData({
         endpoint: EndpointTypes.FACTURAS,
-        id: token
+        id: token || ''
     });
     
     if (loading) {

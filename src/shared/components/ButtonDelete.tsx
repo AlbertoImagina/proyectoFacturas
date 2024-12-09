@@ -12,9 +12,15 @@ import { useRef } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import { deleteData } from "../middlewares/getData";
+import { Factura } from "../../types/Facturas";
 
 
-function ButtonDelete({ idToken, item }) {
+interface Button {
+    idToken:string,
+    item:Factura
+}
+
+function ButtonDelete({ idToken, item } : Button) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef(null);
     const toast = useToast()

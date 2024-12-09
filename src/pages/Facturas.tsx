@@ -4,6 +4,7 @@ import { EndpointTypes } from "../types/Enums/Endpoints";
 import { Flex } from "@chakra-ui/react";
 import Tabla from "../shared/components/Tabla";
 import Filter from "../shared/components/Filter";
+import { Factura } from "../types/Facturas";
 
 export default function Facturas() {
 
@@ -16,7 +17,7 @@ export default function Facturas() {
 
   const filtrado = (param:boolean) => {
     if(param === true || param === false) {
-      const pagado = data?.data.filter((item) => item.pagada === param)
+      const pagado = data?.data.filter((item:Factura) => item.pagada === param)
       setDatosFiltrados(pagado)
     } else {
       setDatosFiltrados([])  

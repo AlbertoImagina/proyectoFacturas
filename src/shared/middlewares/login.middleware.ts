@@ -6,7 +6,7 @@ const _axios = axios.create({
     baseURL: import.meta.env.VITE_API_URL
 })
 
-export const userLogin = async ({ email, password }) => {
+export const userLogin = async ( {email, password} : {email:string; password:string} ) => {
     const { data } = await _axios.get(EndpointTypes.USERS)
 
     const userFind = data?.find((user: UserInt) => user?.email === email)
