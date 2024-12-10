@@ -64,8 +64,8 @@ const navigate = useNavigate()
             title: 'Factura creada con éxito',
             colorScheme: 'green'
         })
-        refreshData()
         navigate("/facturas")
+        refreshData()
     }}
     >
     {({

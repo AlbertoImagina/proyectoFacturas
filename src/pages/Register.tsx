@@ -81,7 +81,7 @@ export const Register = () => {
         })
 
         if (data && data?.email === values?.email) {
-            navigate("/login")
+            navigate("/")
 
             return toast({
                 title: `El registro de ${data?.nombre} fue exitoso.`,

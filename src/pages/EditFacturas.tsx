@@ -66,8 +66,8 @@ function EditFacturas({ item, refreshData } : Edit) {
                     title: "Modificada correctamente",
                     colorScheme:"green"
                 })
-                refreshData()
                 navigate('/facturas')
+                refreshData()
         }}
         >
         {({
