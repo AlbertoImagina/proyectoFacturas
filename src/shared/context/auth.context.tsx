@@ -13,13 +13,13 @@ interface UserContext {
 
 export const AuthContext = React.createContext<UserContext>({
     user: {
-        nombre: "",
-        apellidos: "",
-        telefono: "",
-        email: "",
-        password: "",
-        id: "",
-        createdAt: new Date(),
+        nombre: null,
+        apellidos: null,
+        telefono: null,
+        email: null,
+        password: null,
+        id: null,
+        createdAt: null,
     },
     auth: false,
     setUser: () => { },

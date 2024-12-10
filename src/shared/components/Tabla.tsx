@@ -9,39 +9,25 @@ import {
   TableCaption,
   TableContainer,
   Button,
-  Flex,
 } from "@chakra-ui/react";
 
 import { FaCheckCircle, FaEye } from "react-icons/fa";
 import { VscError } from "react-icons/vsc";
 import { HiPencil } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Factura } from "../../types/Facturas";
 import ButtonDelete from "./ButtonDelete";
 
 
 
 
-function Tabla({ lista, refreshData }: IProps) {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("auth")
-    navigate("/");
-  };
+
+function Tabla({ lista, refreshData }: IProps) {
+
 
   return (
     <>
-    <Flex my="30px" justify="center" gap={4}>
-        <Button variant="solid" colorScheme="teal">
-          <Link to="/addFacturas">Agregar Factura</Link>
-        </Button>
-        <Button variant="solid" colorScheme="red" onClick={handleLogout} alignContent="end">
-          Cerrar Sesión
-        </Button>
-    </Flex>
-
     <TableContainer>
         <Table variant="simple">
           <TableCaption></TableCaption>
