@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { updateData } from "../shared/middlewares/getData";
 import { Factura } from "../types/Facturas";
+import { v4 as uuidv4 } from 'uuid';
 
 
 function EditFacturas({ item } : {item:Factura}) {
@@ -54,24 +55,14 @@ function EditFacturas({ item } : {item:Factura}) {
     
             onSubmit={(values,{ setSubmitting }) => {
             setSubmitting(true)
-            try{
-                const dataValues = { ...values}
+
+                const dataValues = { ...values, id: uuidv4}
                 mutation.mutate(dataValues)
                 toast({
                     title: "Modificada correctamente",
                     colorScheme:"green"
                 })
                 navigate('/')
-            } catch (e) {
-                toast({
-                    title:`No se ha podido modificar la factura: ${e}`,
-                    colorScheme: 'red'
-                    })
-                }
-            toast({
-                title: 'Factura modificada con éxito',
-                colorScheme: 'green'
-            })
         }}
         >
         {({
@@ -79,7 +70,6 @@ function EditFacturas({ item } : {item:Factura}) {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting,
         }) => (
             <form onSubmit={handleSubmit}>
                 <Flex
@@ -143,9 +133,8 @@ function EditFacturas({ item } : {item:Factura}) {
                 colorScheme='teal'
                 m="10px"
                 type="submit" 
-                disabled={isSubmitting}
                 >
-                    Submit
+                    Modificar
                 </Button>
                 </Flex>
     

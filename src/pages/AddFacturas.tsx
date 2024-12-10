@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { addData } from '../shared/middlewares/getData';
 import { useMutation } from '@tanstack/react-query';
 import { Flex, Input,Button, FormLabel, Text, Checkbox, useToast } from '@chakra-ui/react';
@@ -9,10 +9,11 @@ function AddFacturas() {
 
 const toast = useToast()
 
-    const mutation = useMutation({
-        mutationFn: addData
-        })
+const mutation = useMutation({
+    mutationFn: addData
+})
 
+const navigate = useNavigate()
 
     return (
         <div>
@@ -48,6 +49,7 @@ const toast = useToast()
             title: 'Factura creada con éxito',
             colorScheme: 'green'
         })
+        navigate("/facturas")
     }}
     >
     {({
