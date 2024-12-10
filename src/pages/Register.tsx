@@ -191,7 +191,7 @@ export const Register = () => {
 
                         <Link
                             as={RouterLink}
-                            to={"/login"}
+                            to={"/"}
                             fontWeight="600"
                             color="blue.400"
                             cursor="pointer"
