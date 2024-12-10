@@ -22,7 +22,7 @@ import ButtonDelete from "./ButtonDelete";
 
 
 
-function Tabla({ lista }: IProps) {
+function Tabla({ lista, refreshData }: IProps) {
 
   return (
     <>
@@ -65,7 +65,7 @@ function Tabla({ lista }: IProps) {
                   </Button>
                 </Td>
                 <Td textAlign="center">
-                    <ButtonDelete idToken= {item.id} item={item}/>
+                    <ButtonDelete idToken= {item.id} item={item} refreshData={refreshData}/>
                 </Td>
               </Tr>
               

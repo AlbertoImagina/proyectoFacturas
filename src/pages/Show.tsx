@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useData } from "../shared/hooks/useDataId";
+import { useDataId } from "../shared/hooks/useDataId";
 import { EndpointTypes } from "../types/Enums/Endpoints";
 import InformationFactura from "./InformationFactura";
 
@@ -7,7 +7,7 @@ import InformationFactura from "./InformationFactura";
 function Show() {
     const { idToken } = useParams()
 
-    const { data, loading, error } = useData({
+    const { data, loading, error } = useDataId({
         endpoint: EndpointTypes.FACTURAS,
         id: idToken || ''
     });

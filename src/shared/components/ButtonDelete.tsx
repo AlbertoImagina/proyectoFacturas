@@ -19,23 +19,25 @@ import { Factura } from "../../types/Facturas";
 
 interface Button {
     idToken:string,
-    item:Factura
+    item:Factura, 
+    refreshData: () => void
 }
 
-function ButtonDelete({ idToken, item } : Button) {
+function ButtonDelete({ idToken, item, refreshData } : Button) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef(null);
     const toast = useToast()
     
 
     const handleClick = () => {
+    onClose()
     deleteData(idToken)
     .then(() => {
         toast({
             title: "Factura borrada con éxito",
             colorScheme: "success",
         });
-
+        refreshData()
     })
     .catch((e) => {
         toast({

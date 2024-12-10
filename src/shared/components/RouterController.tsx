@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Facturas from "../../pages/Facturas";
-import AddFacturas from "../../pages/AddFacturas";
+import Add from "../../pages/Add";
 import Editar from "../../pages/Editar";
 import Show from "../../pages/Show";
 import Login from "../../pages/Login";
@@ -17,7 +17,7 @@ export const RouterController = () => {
       <Route path="/" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="/facturas" element={ auth? <Login/> : <Facturas/> } />
-      <Route path="addFacturas" element={ auth? <Login/> : <AddFacturas/> } />
+      <Route path="addFacturas" element={ auth? <Login/> : <Add/> } />
       <Route path="editar/:token" element={ auth? <Login/> : <Editar/> } />
       <Route path="show/:idToken" element={ auth? <Login/> : <Show/> } />
     </Routes>

@@ -1,11 +1,33 @@
 import { Formik } from 'formik';
+import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid';
 import { Link, useNavigate } from 'react-router-dom';
 import { addData } from '../shared/middlewares/getData';
 import { useMutation } from '@tanstack/react-query';
 import { Flex, Input,Button, FormLabel, Text, Checkbox, useToast } from '@chakra-ui/react';
 
-function AddFacturas() {
+
+interface Add {
+    refreshData: () => void
+}
+
+function AddFacturas({refreshData}: Add) {
+
+    const initialValues ={
+    createdAt: "",
+    numero: 0,
+    cliente: "",
+    fechaPago: "",
+    pagada: false,
+    }
+
+    const formularioSchema = Yup.object({
+        createdAt: Yup.date().required("Fecha requerida"),
+        numero: Yup.number().required("Número de factura requerida").positive().integer(),
+        cliente: Yup.string().required("Nombre de cliente requerido"),
+        fechaPago: Yup.date().required("Fecha de pago requerida"),
+        pagada: Yup.boolean().optional(),
+    });
 
 const toast = useToast()
 
@@ -33,22 +55,16 @@ const navigate = useNavigate()
 
 
     <Formik
-        initialValues={{ 
-        createdAt: "",
-        numero: 0,
-        cliente: "",
-        fechaPago: "",
-        pagada: false,
-    }}
-
-    onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(true)
+    const initialValues ={initialValues}
+    validationSchema={formularioSchema}
+    onSubmit={(values) => {
         const dataValues = { ...values, id: uuidv4()}
         mutation.mutate(dataValues)
         toast({
             title: 'Factura creada con éxito',
             colorScheme: 'green'
         })
+        refreshData()
         navigate("/facturas")
     }}
     >
@@ -58,6 +74,7 @@ const navigate = useNavigate()
         handleBlur,
         handleSubmit,
         isSubmitting,
+        errors
     }) => (
         <form onSubmit={handleSubmit}>
             <Flex
@@ -75,6 +92,8 @@ const navigate = useNavigate()
                 onBlur={handleBlur}
                 value={values.createdAt}
         />
+            <Text fontSize="xs" color="red" align="left">{errors.createdAt}</Text>
+
             <FormLabel>Numero de cliente</FormLabel>
             <Input
                 type="number"
@@ -83,6 +102,8 @@ const navigate = useNavigate()
                 onBlur={handleBlur}
                 value={values.numero}
         />
+            <Text fontSize="xs" color="red" align="left">{errors.numero}</Text>
+
             <FormLabel>Nombre de cliente</FormLabel>
             <Input
                 type="string"
@@ -91,6 +112,8 @@ const navigate = useNavigate()
                 onBlur={handleBlur}
                 value={values.cliente}
         />
+            <Text fontSize="xs" color="red" align="left">{errors.cliente}</Text>
+
             <FormLabel>Fecha de pago</FormLabel>
             <Input
                 type="date"
@@ -99,6 +122,7 @@ const navigate = useNavigate()
                 onBlur={handleBlur}
                 value={values.fechaPago}
         />
+            <Text fontSize="xs" color="red" align="left">{errors.fechaPago}</Text>
             <FormLabel>Pagada</FormLabel>
             <Checkbox
                 type="boolean"

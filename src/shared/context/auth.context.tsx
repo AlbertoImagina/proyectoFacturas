@@ -10,15 +10,16 @@ interface UserContext {
     logout: (navigate: NavigateFunction) => void;
 }
 
+
 export const AuthContext = React.createContext<UserContext>({
     user: {
-        nombre: null,
-        apellidos: null,
-        telefono: null,
-        email: null,
-        password: null,
-        id: null,
-        createdAt: null,
+        nombre: "",
+        apellidos: "",
+        telefono: "",
+        email: "",
+        password: "",
+        id: "",
+        createdAt: new Date(),
     },
     auth: false,
     setUser: () => { },

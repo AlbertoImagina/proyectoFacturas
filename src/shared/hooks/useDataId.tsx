@@ -7,7 +7,8 @@ interface Props {
   id: string;
 }
 
-export const useData = ({ endpoint, id }: Props) => {
+
+export const useDataId = ({ endpoint, id }: Props) => {
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: [endpoint, id],
     queryFn: () => getFacturaData(`${endpoint}/${id}`),

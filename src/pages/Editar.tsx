@@ -1,4 +1,4 @@
-import { useData } from "../shared/hooks/useDataId";
+import { useDataId } from "../shared/hooks/useDataId";
 import { EndpointTypes } from "../types/Enums/Endpoints";
 import EditFacturas from "./EditFacturas";
 import { useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 function Editar() {
     const {token} = useParams()
 
-    const { data, loading, error } = useData({
+    const { data, loading, error, refreshData } = useDataId({
         endpoint: EndpointTypes.FACTURAS,
         id: token || ''
     });
@@ -21,7 +21,7 @@ function Editar() {
     }
     
     return (
-        <EditFacturas item={data?.data}/>
+        <EditFacturas item={data?.data} refreshData={refreshData}/>
         )
     }
 

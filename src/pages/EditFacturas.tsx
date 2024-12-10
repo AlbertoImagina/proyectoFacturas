@@ -5,20 +5,34 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { updateData } from "../shared/middlewares/getData";
 import { Factura } from "../types/Facturas";
-import { v4 as uuidv4 } from 'uuid';
 
 
-function EditFacturas({ item } : {item:Factura}) {
+interface Edit {
+    item:Factura,
+    refreshData: () => void
+}
+
+
+function EditFacturas({ item, refreshData } : Edit) {
     const formularioSchema = Yup.object({
         createdAt: Yup.date().required("Fecha requerida"),
         numero: Yup.number().required("Número de factura requerida").positive().integer(),
-        cliente: Yup.string().email("Email requerido"),
-        fechaPago: Yup.date().required("Fecha requerida"),
+        cliente: Yup.string().required("Nombre de cliente requerido"),
+        fechaPago: Yup.date().required("Fecha de pago requerida"),
         pagada: Yup.boolean().optional(),
     });
     
     const toast = useToast()
     const navigate = useNavigate()
+
+    const initualValues = {
+        id: item.id,
+        createdAt: item.createdAt,
+        numero: item.numero,
+        cliente: item.cliente,
+        fechaPago: item.fechaPago,
+        pagada: false,
+    }
     
         const mutation = useMutation({
             mutationFn: updateData
@@ -43,26 +57,17 @@ function EditFacturas({ item } : {item:Factura}) {
     
     
         <Formik
-            initialValues={{ 
-            id: item.id,
-            createdAt: item.createdAt,
-            numero: item.numero,
-            cliente: item.cliente,
-            fechaPago: item.fechaPago,
-            pagada: false,
-        }}
+            initialValues={initualValues}
             validationSchema={formularioSchema}
-    
-            onSubmit={(values,{ setSubmitting }) => {
-            setSubmitting(true)
-
-                const dataValues = { ...values, id: uuidv4}
+            onSubmit={(values) => {
+                const dataValues = { ...values}
                 mutation.mutate(dataValues)
                 toast({
                     title: "Modificada correctamente",
                     colorScheme:"green"
                 })
-                navigate('/')
+                refreshData()
+                navigate('/facturas')
         }}
         >
         {({
@@ -70,6 +75,7 @@ function EditFacturas({ item } : {item:Factura}) {
             handleChange,
             handleBlur,
             handleSubmit,
+            errors
         }) => (
             <form onSubmit={handleSubmit}>
                 <Flex
@@ -97,6 +103,7 @@ function EditFacturas({ item } : {item:Factura}) {
                     onBlur={handleBlur}
                     value={values.createdAt}
             />
+                    <Text fontSize="xs" color="red" align="left">{errors.createdAt}</Text>
                 <FormLabel>Numero de cliente</FormLabel>
                 <Input
                     type="number"
@@ -105,6 +112,7 @@ function EditFacturas({ item } : {item:Factura}) {
                     onBlur={handleBlur}
                     value={values.numero}
             />
+                    <Text fontSize="xs" color="red" align="left">{errors.numero}</Text>
                 <FormLabel>Nombre de cliente</FormLabel>
                 <Input
                     type="string"
@@ -113,6 +121,7 @@ function EditFacturas({ item } : {item:Factura}) {
                     onBlur={handleBlur}
                     value={values.cliente}
             />
+                    <Text fontSize="xs" color="red" align="left">{errors.cliente}</Text>
                 <FormLabel>Fecha de pago</FormLabel>
                 <Input
                     type="date"
@@ -121,6 +130,7 @@ function EditFacturas({ item } : {item:Factura}) {
                     onBlur={handleBlur}
                     value={values.fechaPago}
             />
+                    <Text fontSize="xs" color="red" align="left">{errors.fechaPago}</Text>
                 <FormLabel>Pagada</FormLabel>
                 <Checkbox
                     type="boolean"
