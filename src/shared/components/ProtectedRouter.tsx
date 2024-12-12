@@ -1,13 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAuthContext } from "../context/auth.context"
-/* import Facturas from "../../pages/Facturas"; */
+import { Box } from "@chakra-ui/react"
 
 export const ProtectedRouter = () => {
     const { auth } = useAuthContext();
 
-    return (
-        auth
-            ? <Outlet/>
-            : <Navigate to={"/"} />
+    return auth ? (
+        <Box minH="100vh" bg="white">
+            <Outlet/>
+        </Box>
+    ) : (
+        <Navigate to={"/"} />
     )
 }
