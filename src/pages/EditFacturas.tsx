@@ -2,7 +2,7 @@ import { Flex,Text,Input, Checkbox, Button, FormLabel, useToast } from "@chakra-
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+/* import { useMutation } from '@tanstack/react-query'; */
 import { updateData } from "../shared/middlewares/getData";
 import { Factura } from "../types/Facturas";
 
@@ -34,9 +34,9 @@ function EditFacturas({ item, refreshData } : Edit) {
         pagada: false,
     }
     
-        const mutation = useMutation({
+/*         const mutation = useMutation({
             mutationFn: updateData
-            })
+            }) */
     
     
         return (
@@ -61,13 +61,14 @@ function EditFacturas({ item, refreshData } : Edit) {
             validationSchema={formularioSchema}
             onSubmit={(values) => {
                 const dataValues = { ...values}
-                mutation.mutate(dataValues)
+                updateData(dataValues)
+
                 toast({
                     title: "Modificada correctamente",
                     colorScheme:"green"
                 })
-                navigate('/facturas')
                 refreshData()
+
         }}
         >
         {({

@@ -7,22 +7,28 @@ import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import { ProtectedRouter } from "./ProtectedRouter";
 
-/* import { useAuthContext } from "../context/auth.context"; */
+import { useAuthContext } from "../context/auth.context";
 
 
 export const RouterController = () => {
-/*   const { auth } = useAuthContext(); */
+  const { auth } = useAuthContext();
 
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route path="/" element={auth ? <Facturas/> : <Login />} />
+      <Route path="register" element={auth ? <Facturas/> : <Register />} />
+      
       <Route element={<ProtectedRouter />}>
         <Route path="/facturas" element={<Facturas/> } />
         <Route path="addFacturas" element={ <Add/> } />
+      </Route>
+
+      <Route element={<ProtectedRouter />}>
         <Route path="editar/:token" element={ <Editar/> } />
         <Route path="show/:idToken" element={ <Show/> } />
       </Route>
+
+
 
     </Routes>
   );
