@@ -1,7 +1,7 @@
 import { Flex,Text,Input, Checkbox, Button, FormLabel, useToast } from "@chakra-ui/react"
 import { Formik } from 'formik';
 import * as Yup from 'yup'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 /* import { useMutation } from '@tanstack/react-query'; */
 import { updateData } from "../shared/middlewares/getData";
 import { Factura } from "../types/Facturas";
@@ -23,7 +23,7 @@ function EditFacturas({ item, refreshData } : Edit) {
     });
     
     const toast = useToast()
-    const navigate = useNavigate()
+
 
     const initualValues = {
         id: item.id,

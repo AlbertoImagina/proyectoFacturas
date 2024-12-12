@@ -7,5 +7,7 @@ describe('Login tester', () => {
     cy.get('input[type=password]').type('botella123')
 
     cy.get('button').contains('Continuar').click()
+
+    cy.get('button').contains('Agregar Factura').click()
   })
 })
